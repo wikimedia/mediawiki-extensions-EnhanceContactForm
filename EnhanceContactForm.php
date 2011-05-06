@@ -68,7 +68,7 @@ function addContactFormFields( $contactForm, $form ) {
 				'</td>
 			</tr>
 			<tr>' .
-				Xml::hidden( 'wpDBname', $wgDBname, array( 'maxlength' => 100 ) ) .
+				Html::Hidden( 'wpDBname', $wgDBname, array( 'maxlength' => 100 ) ) .
 				"</tr>\n\t\t\t";
 	if( class_exists( 'MyInfo' ) ) {
 		$myinfo = new MyInfo();
@@ -76,16 +76,16 @@ function addContactFormFields( $contactForm, $form ) {
 		$myinfo->info = browser_detection( 'full' );
 		$myinfo->info[] = browser_detection( 'moz_version' );
 		$form .= '<tr>' .
-				Xml::hidden( 'wpBrowser', $myinfo->getBrowser(), array( 'maxlength' => 255 ) ) .
+				Html::Hidden( 'wpBrowser', $myinfo->getBrowser(), array( 'maxlength' => 255 ) ) .
 				'</tr>
 			<tr>' .
-				Xml::hidden( 'wpOperatingSystem', $myinfo->getOs(), array( 'maxlength' => 255 ) ) .
+				Html::Hidden( 'wpOperatingSystem', $myinfo->getOs(), array( 'maxlength' => 255 ) ) .
 				'</tr>
 			<tr>' .
-				Xml::hidden( 'wpSkinName', $myinfo->getSkin(), array( 'maxlength' => 35 ) ) .
+				Html::Hidden( 'wpSkinName', $myinfo->getSkin(), array( 'maxlength' => 35 ) ) .
 				'</tr>
 			<tr>' .
-				Xml::hidden( 'wpUserAgent', $myinfo->getUAgent(), array( 'maxlength' => 500 ) ) .
+				Html::Hidden( 'wpUserAgent', $myinfo->getUAgent(), array( 'maxlength' => 500 ) ) .
 				'</tr>';
 	}
 	return true;
