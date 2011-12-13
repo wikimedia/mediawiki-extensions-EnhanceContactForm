@@ -25,7 +25,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'EnhanceContactForm',
 	'version' => '0.5',
 	'author' => 'Jack Phoenix',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:EnhanceContactForm',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:EnhanceContactForm',
 	'description' => 'Enhances [[Special:Contact]] by sending more info',
 );
 
