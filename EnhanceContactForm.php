@@ -24,11 +24,13 @@ if( !defined( 'MEDIAWIKI' ) ) {
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['other'][] = array(
 	'name' => 'EnhanceContactForm',
-	'version' => '0.6',
+	'version' => '0.6.2',
 	'author' => 'Jack Phoenix',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:EnhanceContactForm',
 	'descriptionmsg' => 'enhancecontactform-desc',
 );
+
+$wgMessagesDirs['EnhanceContactForm'] = __DIR__ . '/i18n';
 
 $wgHooks['ContactForm'][] = 'enhanceContactForm';
 
@@ -46,8 +48,20 @@ function enhanceContactForm( &$to, &$replyto, &$subject, &$text ) {
 	$text .= 'IP address of the reporter: ' . $wgRequest->getIP() . "\n";
 
 	if ( class_exists( 'MyInfo' ) ) {
+		global $IP;
+		require_once $IP . '/extensions/MyInfo/browser_detector.php';
 		$myinfo = new MyInfo();
-		$myinfo->browser = get_browser( null, true );
+
+		// Stupid hack for HHVM since HHVM doesn't implement PHP's native get_browser() :-(
+		// @see http://docs.hhvm.com/manual/en/function.get-browser.php
+		// @see https://github.com/facebook/hhvm/issues/2541
+		if ( get_cfg_var( 'browscap' ) ) {
+			$myinfo->browser = get_browser( null, true );
+		} else {
+			require_once $IP . '/extensions/MyInfo/php-local-browscap.php';
+			$myinfo->browser = get_browser_local( null, true );
+		}
+
 		$myinfo->info = browser_detection( 'full' );
 		$myinfo->info[] = browser_detection( 'moz_version' );
 		$text .= 'Browser: ' . $myinfo->getBrowser() . "\n";
